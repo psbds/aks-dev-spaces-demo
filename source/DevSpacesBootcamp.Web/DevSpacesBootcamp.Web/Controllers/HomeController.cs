@@ -27,10 +27,20 @@ namespace DevSpacesBootcamp.Web.Controllers
 			}
 		}
 
-		
+
 		public async Task<IActionResult> Index()
 		{
-			var response = await Client.GetAsync("http://devspacesbootcampbackend/data");
+			var request = new HttpRequestMessage()
+			{
+				RequestUri = new Uri("http://devspacesbootcampbackend/data")
+			};
+
+			if (Request.Headers.ContainsKey("azds-route-as"))
+			{
+				request.Headers.Add("azds-route-as", Request.Headers["azds-route-as"] as IEnumerable<string>);
+			}
+
+			var response = await Client.SendAsync(request);
 
 			string[] data = JsonConvert.DeserializeObject<string[]>(response.Content.ReadAsStringAsync().Result);
 

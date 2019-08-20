@@ -1,6 +1,12 @@
 {
     "configurations": [
         {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach",
+            "port": 53747
+        },
+        {
             "name": "Launch Server (AZDS)",
             "type": "node",
             "request": "launch",
