@@ -1,0 +1,13 @@
+﻿@model string[]
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Horde Cities</h1>
+
+<ul>
+	@foreach(var m in Model)
+	{
+		<li>@m</li>
+	}
+</ul>

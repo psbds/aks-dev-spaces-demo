@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: backend
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: backend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: backend
+    spec:
+      containers:
+      - image: bootcampbr.azurecr.io/backend:latest
+        name: backend
+        resources: {}
+        ports:
+        - name: http
+          containerPort: 80
+      imagePullSecrets:
+      -  name: acr-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: backend
+  name: devspacesbootcampbackend
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: backend
+  sessionAffinity: None
+  type: NodePort

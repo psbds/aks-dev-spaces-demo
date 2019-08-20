@@ -1,0 +1,44 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: web
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: web
+    spec:
+      containers:
+      - image: bootcampbr.azurecr.io/web:latest
+        name: web
+        resources: {}
+        ports:
+        - name: http
+          containerPort: 80
+      imagePullSecrets:
+      -  name: acr-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: web
+  name: devspacesbootcampweb
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: web
+  sessionAffinity: None
+  type: LoadBalancer
